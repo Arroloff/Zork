@@ -1,8 +1,12 @@
 import computerspielchen.zork.Karte;
+import computerspielchen.zork.Main;
 import computerspielchen.zork.Person;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Scanner;
 
 import static org.testng.Assert.*;
 
@@ -67,5 +71,26 @@ public class PersonTest {
 
         assertEquals(caro.getPosition().x,1 );
         assertEquals(caro.getPosition().y,0 );
+    }
+
+    // timeOut = 5000 heißt dass der Test nach 5 sekunden fertig sein sollte.
+    // damit schau ich dass wir nicht ewig in der endlosschleife hängen sonder das programm sich wirklich beendet
+    // wenn wir "ende" eintippen
+
+
+    // du sollst jetzt in der main in der schleife immer eine zeile lesen und schauen ob "ende" geschrieben wird. und in dem fall soll das Programm beendet werden.
+    // das Programm kann man mit dem Befehl "return" beenden.
+    @Test(timeOut = 5000)
+    public void testEnde() {
+        String eingabe = "Bran\r\n" +
+                        "ende\r\n";
+
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(eingabe.getBytes()));
+            Main.main(null);
+        } finally {
+            System.setIn(stdin);
+        }
     }
 }
